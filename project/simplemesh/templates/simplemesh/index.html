@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Recent Conversations</title>
+	</head>
+
+	<body>
+	
+	<h1>Conversations on Simplemesh</h1>
+		{% if results %}
+			<ul>
+			{% for c in results %}
+				<li><a href="{% url 'simplemesh:detail' c.id %}">
+					{{ c.text }}
+				</a></li>
+			{% endfor %}
+			</ul>
+		{% elif errors %}
+			{{ errors }}
+		{% endif %}
+	<strong>Start a Conversation</strong>
+	<form action="{% url 'simplemesh:start' %}" id="start_convo" method="post">
+		{% csrf_token %}
+		<input type="text" name="new" id="new">
+		<p><input type="submit" value="Start" form="start_convo"></p>
+	</form>
+
+
+	<strong>Search Conversations</strong>
+	<form action="{% url 'simplemesh:search' %}" id="search" method="post">
+		{% csrf_token %}
+		<input type="text" name="query" id="query">
+		<p><input type="submit" value="Search Conversations" form="search"></p>
+	</form>
+
+
+	</body>
+
+</html>
+
