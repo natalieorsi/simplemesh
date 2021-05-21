@@ -1,51 +1,51 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
+    <head>
+        <meta charset="utf-8">
 
-	<body>
-		<h1>Message #{{ message.id }} </h1>
-	<breadcrumb><a href="{% url 'simplemesh:index' %}">Back to Index</a> |
-		<a href="{% url 'simplemesh:detail' message.conversation.id %}">Back to Conversation</a> 
-	</breadcrumb>
-	{% if message %}
-		<main>
-		<p>{{ message.text }}</p>
-		<em>@ {{ message.pub_date }}</em>
-		<h2>Thoughts on Conversation #{{ message.conversation.id }} Message #{{ message.id }}</h2>
+    <body>
+        <h1>Message #{{ message.id }} </h1>
+    <breadcrumb><a href="{% url 'simplemesh:index' %}">Back to Index</a> |
+        <a href="{% url 'simplemesh:detail' message.conversation.id %}">Back to Conversation</a> 
+    </breadcrumb>
+    {% if message %}
+        <main>
+        <p>{{ message.text }}</p>
+        <em>@ {{ message.pub_date }}</em>
+        <h2>Thoughts on Conversation #{{ message.conversation.id }} Message #{{ message.id }}</h2>
 
-		{% if message.thought_set.all %}
+        {% if message.thought_set.all %}
 
-			<ul>
-			{% for t in message.thought_set.all %}
-				<li><strong>Thought #{{ t.id }}:</strong>
-				 {{ t.text }} <em>@ {{ t.pub_date }}</em>
-			{% endfor %}
+            <ul>
+            {% for t in message.thought_set.all %}
+                <li><strong>Thought #{{ t.id }}:</strong>
+                 {{ t.text }} <em>@ {{ t.pub_date }}</em>
+            {% endfor %}
 
-			</ul>
-		{% else %}
-			<p>No one has shared thoughts on this message.</p>
+            </ul>
+        {% else %}
+            <p>No one has shared thoughts on this message.</p>
 
-		{% endif %}
-
-
-
-		<h2>Add your Thought</h2>
-
-		<form action="{% url 'simplemesh:add_thought' message.id %}" id="add_thought" method="post">
-		{% csrf_token %}
-			<input type="text" name="new" id="new">
-			<p><input type="submit" value="Submit" form="add_thought"></p>
-
-	{% elif conversation %}
-
-		<p>An error occurred while trying to find this message.</p>
-
-		{% else %}
-		<p>An error occurred while trying to find Conversation #{{ conversation.id }}.</p>
-		</main>
+        {% endif %}
 
 
-	{% endif %}
-	</body>
+
+        <h2>Add your Thought</h2>
+
+        <form action="{% url 'simplemesh:add_thought' message.id %}" id="add_thought" method="post">
+        {% csrf_token %}
+            <input type="text" name="new" id="new">
+            <p><input type="submit" value="Submit" form="add_thought"></p>
+
+    {% elif conversation %}
+
+        <p>An error occurred while trying to find this message.</p>
+
+        {% else %}
+        <p>An error occurred while trying to find Conversation #{{ conversation.id }}.</p>
+        </main>
+
+
+    {% endif %}
+    </body>
 </html>

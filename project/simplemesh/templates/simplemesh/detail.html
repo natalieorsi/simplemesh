@@ -1,65 +1,65 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Conversation #{{ conversation.id }}</title>
-	</head>
+    <head>
+        <meta charset="utf-8">
+        <title>Conversation #{{ conversation.id }}</title>
+    </head>
 
-	<body>
+    <body>
 
-	<main>
-	<breadcrumb>
+    <main>
+    <breadcrumb>
 
-	<a href="{% url 'simplemesh:index'%}">Return to Index</a>
-	</breadcrumb>
+    <a href="{% url 'simplemesh:index'%}">Return to Index</a>
+    </breadcrumb>
 
-	{% if conversation %}
-		<h1><strong>Conversation #{{ conversation.id }}</strong></h1>
-		 {{ conversation.text }}
-		
-		<h2>Message Replies to Conversation #{{ conversation.id }}</h2>
-		{% if conversation.message_set.all %}
+    {% if conversation %}
+        <h1><strong>Conversation #{{ conversation.id }}</strong></h1>
+         {{ conversation.text }}
+        
+        <h2>Message Replies to Conversation #{{ conversation.id }}</h2>
+        {% if conversation.message_set.all %}
 
-			<ul>
-			{% for m in conversation.message_set.all %}
-			<li><strong>Message #{{ m.id }}:</strong> {{ m.text }} <em>@ {{ m.pub_date }}</em>
-				<ul><li>
-					<a href="{% url 'simplemesh:message' m.id %}">
-				Thoughts
+            <ul>
+            {% for m in conversation.message_set.all %}
+            <li><strong>Message #{{ m.id }}:</strong> {{ m.text }} <em>@ {{ m.pub_date }}</em>
+                <ul><li>
+                    <a href="{% url 'simplemesh:message' m.id %}">
+                Thoughts
 
-				({{ m.thought_set.count }})
-				</a></li></ul></li>
-			{% endfor %}
-			</ul>
+                ({{ m.thought_set.count }})
+                </a></li></ul></li>
+            {% endfor %}
+            </ul>
 
-		{% else %}
-		<p>No messages to be found for this conversation. Create one?</p>
-		{% endif %}
+        {% else %}
+        <p>No messages to be found for this conversation. Create one?</p>
+        {% endif %}
 
-		<h2>Add a Message</h2>
-		<form action="{% url 'simplemesh:add_message' conversation.id %}" id="add_message" method="post">
-		{% csrf_token %}
-		<input type="text" name="new" id="new">
-		<p><input type="submit" value="Submit" form="add_message"></p>
+        <h2>Add a Message</h2>
+        <form action="{% url 'simplemesh:add_message' conversation.id %}" id="add_message" method="post">
+        {% csrf_token %}
+        <input type="text" name="new" id="new">
+        <p><input type="submit" value="Submit" form="add_message"></p>
 
-		</form>
-
-
-		<h2>Search Messages (All Conversations)</h2>
-		<form action="{% url 'simplemesh:search' %}" id="search" method="post">
-		{% csrf_token %}
-		<input type="text" name="query" id="query">
-		<input type="hidden" name="object_type" id="object_type" value="Message">
-		<p><input type="submit" value="Search" form="search"></p>
-		</form>
+        </form>
 
 
-	{% else %}
-	<p>An error has occurred while trying to find Conversation #{{ conversation.id}}</p>
-	</main>
-	{% endif %}
+        <h2>Search Messages (All Conversations)</h2>
+        <form action="{% url 'simplemesh:search' %}" id="search" method="post">
+        {% csrf_token %}
+        <input type="text" name="query" id="query">
+        <input type="hidden" name="object_type" id="object_type" value="Message">
+        <p><input type="submit" value="Search" form="search"></p>
+        </form>
+
+
+    {% else %}
+    <p>An error has occurred while trying to find Conversation #{{ conversation.id}}</p>
+    </main>
+    {% endif %}
 
 
 
-	</body>
+    </body>
 </html>
