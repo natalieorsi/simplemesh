@@ -1,52 +1,52 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Search Results</title>
-	</head>
+    <head>
+        <meta charset="utf-8">
+        <title>Search Results</title>
+    </head>
 
-	<body>
-		<h1>Search Results</h1>
-		<breadcrumb>
-			<a href="{% url 'simplemesh:index' %}">Return to Index</a>
-		</breadcrumb>
+    <body>
+        <h1>Search Results</h1>
+        <breadcrumb>
+            <a href="{% url 'simplemesh:index' %}">Return to Index</a>
+        </breadcrumb>
 
-		{% if results %}
-		<p>
-			<ul>
-			{% for c in results %}
-			<li>
-				{% if c.conversation.id %}
-				<a href="{% url 'simplemesh:detail' c.conversation.id %}">
-					{{ c }}
+        {% if results %}
+        <p>
+            <ul>
+            {% for c in results %}
+            <li>
+                {% if c.conversation.id %}
+                <a href="{% url 'simplemesh:detail' c.conversation.id %}">
+                    {{ c }}
 
-					(Link to Conversation #{{ c.conversation.id }})
-				{% else %}
-				<a href="{% url 'simplemesh:detail' c.id %}">{{ c }}</a>
+                    (Link to Conversation #{{ c.conversation.id }})
+                {% else %}
+                <a href="{% url 'simplemesh:detail' c.id %}">{{ c }}</a>
 
-				{% endif %}
+                {% endif %}
 
-				</a></li>
-			{% endfor %}
-			</ul>
-		</p>
-		{% else %}
-			<p>Search your query below.</p>
-		{% endif %}	
-		
-		{% if errors %}{% for e in errors %}
-			<strong>{{ e }}</strong>
-				{% endfor %}
-		{% endif %}
-	<form action="{% url 'simplemesh:search' %}" id="search" method="post">
-		{% csrf_token %}
-		<input type="text" name"query" id="query">
-		<input type="hidden" name="object_type" id="object_type" value="Conversation">
-		<p><input type="submit" value="Search Conversations" form="search"></p>
-	</form>
+                </a></li>
+            {% endfor %}
+            </ul>
+        </p>
+        {% else %}
+            <p>Search your query below.</p>
+        {% endif %}    
+        
+        {% if errors %}{% for e in errors %}
+            <strong>{{ e }}</strong>
+                {% endfor %}
+        {% endif %}
+    <form action="{% url 'simplemesh:search' %}" id="search" method="post">
+        {% csrf_token %}
+        <input type="text" name"query" id="query">
+        <input type="hidden" name="object_type" id="object_type" value="Conversation">
+        <p><input type="submit" value="Search Conversations" form="search"></p>
+    </form>
 
 
-	</body>
+    </body>
 
 </html>
 
